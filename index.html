@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>prangon barua</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%;overflow:hidden}
+    body{
+      padding:70px 0 60px 50px;
+      background:#fff;color:#000;
+      font:400 15px/1.9 'Times New Roman',Times,serif;
+      text-transform:lowercase;
+    }
+    a{color:#000;text-decoration:none;cursor:pointer}
+    a:hover{text-decoration:underline}
+    .c{max-width:280px}
+    .page{display:none}
+    .page.active{display:block}
+    .name{margin-bottom:36px}
+    .sec-title{margin-bottom:8px}
+    .desc{margin-top:8px}
+    .gap{margin-bottom:36px}
+    @media(max-width:480px){
+      body{padding:40px 0 40px 24px}
+      .c{max-width:100%}
+    }
+  </style>
+</head>
+<body>
+<div class="c">
+
+  <div class="page active" id="landing">
+    <div class="name">prangon barua</div>
+    <a onclick="show('about')">about</a><br>
+    <a onclick="show('projects')">projects</a><br>
+    <a onclick="show('experience')">experience</a><br>
+    <a onclick="show('skills')">skills</a><br>
+    <a onclick="show('contact')">contact</a>
+  </div>
+
+  <div class="page" id="about">
+    <div class="name"><a onclick="show('landing')">prangon barua</a></div>
+    <div class="gap">about</div>
+    aspiring electrical engineer and data scientist based in massachusetts. building things in the digital and physical worlds — from python data tools to autonomous drones to rc plane tracking systems.
+  </div>
+
+  <div class="page" id="projects">
+    <div class="name"><a onclick="show('landing')">prangon barua</a></div>
+    <div class="gap">projects</div>
+    <a onclick="show('p-billboard')">billboard hot 100 chart visualizer</a><br>
+    <a onclick="show('p-tracker')">rc plane tracker</a><br>
+    <a onclick="show('p-auv')">auv development</a><br>
+    <a onclick="show('p-drone')">massrobotics drone</a><br>
+    <a onclick="show('p-radio')">ham radio projects</a>
+  </div>
+
+  <div class="page" id="p-billboard">
+    <div class="name"><a onclick="show('projects')">prangon barua</a></div>
+    <div class="sec-title">billboard hot 100 chart visualizer</div>
+    <div class="desc">python tool that tracks billboard hot 100 chart data for music artists, processes datasets with pandas, exports to excel, and creates animated bar chart race videos using flourish studio. youtube channel (historycharts) has 140k+ views across 14 videos.</div>
+  </div>
+
+  <div class="page" id="p-tracker">
+    <div class="name"><a onclick="show('projects')">prangon barua</a></div>
+    <div class="sec-title">rc plane tracker</div>
+    <div class="desc">real-time gps tracking system for a 3d printed rc plane using lora radio modules and esp32 microcontrollers for long-range telemetry and live position display.</div>
+  </div>
+
+  <div class="page" id="p-auv">
+    <div class="name"><a onclick="show('projects')">prangon barua</a></div>
+    <div class="sec-title">auv development</div>
+    <div class="desc">designed and built silicone auv and starfish model prototypes at bluetech academy in collaboration with mitre and greensight.</div>
+  </div>
+
+  <div class="page" id="p-drone">
+    <div class="name"><a onclick="show('projects')">prangon barua</a></div>
+    <div class="sec-title">massrobotics drone</div>
+    <div class="desc">built and programmed a raspberry pi-based autonomous quadcopter from parts — assembled hardware, configured ros software, tuned pid controllers, and tested autonomous flight with onboard camera and time-of-flight sensors.</div>
+  </div>
+
+  <div class="page" id="p-radio">
+    <div class="name"><a onclick="show('projects')">prangon barua</a></div>
+    <div class="sec-title">ham radio projects</div>
+    <div class="desc">built an oscillator prototype with mit students — vacuum tube amplifier, potentiometer frequency control, speaker output. also designed and assembled a yagi antenna and used it in a foxhunt across mit's campus to track a hidden transmitter. mit bwsi.</div>
+  </div>
+
+  <div class="page" id="experience">
+    <div class="name"><a onclick="show('landing')">prangon barua</a></div>
+    <div class="gap">experience</div>
+    mit bwsi, 2025<br>
+    focus @ bae systems, 2025<br>
+    bluetech academy, 2025<br>
+    massrobotics, 2025
+  </div>
+
+  <div class="page" id="skills">
+    <div class="name"><a onclick="show('landing')">prangon barua</a></div>
+    <div class="gap">skills</div>
+    python<br>
+    c / c++<br>
+    javascript<br>
+    html / css<br>
+    arduino / esp32<br>
+    lora / rf<br>
+    git / github<br>
+    matlab
+  </div>
+
+  <div class="page" id="contact">
+    <div class="name"><a onclick="show('landing')">prangon barua</a></div>
+    <div class="gap">contact</div>
+    <a href="mailto:baruaprangon5@gmail.com">email</a><br>
+    <a href="https://github.com/prangonbarua/" target="_blank">github</a><br>
+    <a href="https://www.linkedin.com/in/prangonbarua/" target="_blank">linkedin</a><br>
+    <a href="https://www.instagram.com/prangonbaruaaa/" target="_blank">instagram</a><br>
+    <a href="https://www.youtube.com/@HistoryCharts" target="_blank">youtube</a>
+  </div>
+
+</div>
+<script>
+function show(id){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+}
+</script>
+</body>
+</html>
