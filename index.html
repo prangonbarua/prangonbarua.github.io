@@ -3,135 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>prangon barua</title>
+  <title>Prangon Barua</title>
   <link rel="icon" type="image/png" href="favicon.png">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    html,body{height:100%;overflow:hidden}
     body{
-      padding:70px 0 60px 50px;
-      background:#fff;color:#000;
-      font:400 15px/1.9 'Times New Roman',Times,serif;
-      text-transform:lowercase;
+      max-width:640px;
+      margin:60px auto;
+      padding:0 24px;
+      background:#fff;
+      color:#000;
+      font:16px/1.6 Georgia, 'Times New Roman', Times, serif;
     }
-    a{color:#000;text-decoration:none;cursor:pointer}
-    a:hover{text-decoration:underline}
-    .c{max-width:280px}
-    .page{display:none}
-    .page.active{display:block}
-    .name{margin-bottom:36px}
-    .sec-title{margin-bottom:8px}
-    .desc{margin-top:8px}
-    .gap{margin-bottom:36px}
-    @media(max-width:480px){
-      body{padding:40px 0 40px 24px}
-      .c{max-width:100%}
+    h1{
+      font-size:28px;
+      font-weight:bold;
+      margin-bottom:8px;
     }
+    nav{
+      margin-bottom:32px;
+      font-size:15px;
+    }
+    nav a{margin-right:16px}
+    a{color:#000;text-decoration:underline}
+    a:hover{color:#555}
+    p{margin-bottom:16px}
   </style>
 </head>
 <body>
-<div class="c">
-
-  <div class="page active" id="landing">
-    <div class="name">prangon barua</div>
-    <a onclick="show('about')">about</a><br>
-    <a onclick="show('projects')">projects</a><br>
-    <a onclick="show('experience')">experience</a><br>
-    <a onclick="show('skills')">skills</a><br>
-    <a onclick="show('contact')">contact</a>
-  </div>
-
-  <div class="page" id="about">
-    <div class="name"><a onclick="show('landing')">prangon barua</a></div>
-    <div class="gap">about</div>
-    developer and creator based in massachusetts. building things at the intersection of hardware, software, and data. from embedded telemetry systems and autonomous drones to full stack web apps and machine learning pipelines. currently focused on projects with real world social impact.
-  </div>
-
-  <div class="page" id="projects">
-    <div class="name"><a onclick="show('landing')">prangon barua</a></div>
-    <div class="gap">projects</div>
-    <a onclick="show('p-relate')">relate</a><br>
-    <a onclick="show('p-billboard')">u.s. top charts</a><br>
-    <a onclick="show('p-tracker')">rc plane tracker</a><br>
-    <a onclick="show('p-auv')">auv development</a><br>
-    <a onclick="show('p-drone')">massrobotics drone</a><br>
-    <a onclick="show('p-radio')">ham radio projects</a>
-  </div>
-
-  <div class="page" id="p-relate">
-    <div class="name"><a onclick="show('projects')">prangon barua</a></div>
-    <div class="sec-title">relate</div>
-    <div class="desc">a free multilingual app that trains immigrant parents to become their autistic child's daily therapist. bridges the 27-month gap between autism diagnosis and real clinical care using evidence-based aba techniques delivered in the parent's native language. built for communities that current healthcare systems leave behind.</div>
-  </div>
-
-  <div class="page" id="p-billboard">
-    <div class="name"><a onclick="show('projects')">prangon barua</a></div>
-    <div class="sec-title">u.s. top charts</div>
-    <div class="desc">full stack flask web app that surfaces every billboard hot 100 and album charts 200 entry since 1958 with no paywalls. features artist career analysis, week by week chart history, spotify integration, deezer artwork, and excel report exports in a pivot table layout. youtube channel (historycharts) has 140k+ views across 14 videos.</div>
-  </div>
-
-  <div class="page" id="p-tracker">
-    <div class="name"><a onclick="show('projects')">prangon barua</a></div>
-    <div class="sec-title">rc plane tracker</div>
-    <div class="desc">long range telemetry system for an rc aircraft built on an esp32 and lora radio module. streams gps coordinates, altitude, and airspeed over a custom 915 mhz link to a live web dashboard rendered in the browser with no external services required.</div>
-  </div>
-
-  <div class="page" id="p-auv">
-    <div class="name"><a onclick="show('projects')">prangon barua</a></div>
-    <div class="sec-title">auv development</div>
-    <div class="desc">designed and built silicone auv and starfish model prototypes at bluetech academy in collaboration with mitre and greensight.</div>
-  </div>
-
-  <div class="page" id="p-drone">
-    <div class="name"><a onclick="show('projects')">prangon barua</a></div>
-    <div class="sec-title">massrobotics drone</div>
-    <div class="desc">built and programmed a raspberry pi based autonomous quadcopter from individual components at massrobotics. assembled the full hardware stack, configured ros2, tuned pid controllers for stable hover, and validated autonomous flight routines using an onboard camera and time of flight sensors for obstacle detection.</div>
-  </div>
-
-  <div class="page" id="p-radio">
-    <div class="name"><a onclick="show('projects')">prangon barua</a></div>
-    <div class="sec-title">ham radio projects</div>
-    <div class="desc">built an oscillator prototype with mit students featuring a vacuum tube amplifier, potentiometer frequency control, and speaker output. designed and assembled a directional yagi antenna then used it in a campus wide foxhunt at mit to track a hidden transmitter using signal strength triangulation. part of mit bwsi 2025.</div>
-  </div>
-
-  <div class="page" id="experience">
-    <div class="name"><a onclick="show('landing')">prangon barua</a></div>
-    <div class="gap">experience</div>
-    mit bwsi, 2025<br>
-    focus @ bae systems, 2025<br>
-    bluetech academy, 2025<br>
-    massrobotics, 2025
-  </div>
-
-  <div class="page" id="skills">
-    <div class="name"><a onclick="show('landing')">prangon barua</a></div>
-    <div class="gap">skills</div>
-    python<br>
-    c / c++<br>
-    javascript<br>
-    html / css<br>
-    arduino / esp32<br>
-    lora / rf<br>
-    git / github<br>
-    matlab
-  </div>
-
-  <div class="page" id="contact">
-    <div class="name"><a onclick="show('landing')">prangon barua</a></div>
-    <div class="gap">contact</div>
-    <a href="mailto:baruaprangon5@gmail.com">email</a><br>
-    <a href="https://github.com/prangonbarua/" target="_blank">github</a><br>
-    <a href="https://www.linkedin.com/in/prangonbarua/" target="_blank">linkedin</a><br>
-    <a href="https://www.instagram.com/prangonbaruaaa/" target="_blank">instagram</a><br>
-    <a href="https://www.youtube.com/@HistoryCharts" target="_blank">youtube</a>
-  </div>
-
-</div>
-<script>
-function show(id){
-  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
-  document.getElementById(id).classList.add('active');
-}
-</script>
+  <h1><a href="/" style="text-decoration:none">Prangon Barua</a></h1>
+  <nav>
+    <a href="/">Home</a>
+    <a href="cv.pdf">CV</a>
+  </nav>
+  <p>Hi! My name is Prangon Barua. Here is <a href="cv.pdf">my CV</a> and here is <a href="https://github.com/prangonbarua">my GitHub page</a>.</p>
+  <p>I am currently a high school student at Burlington High School in Burlington, MA.</p>
 </body>
 </html>
