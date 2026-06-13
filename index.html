@@ -5,36 +5,389 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prangon Barua</title>
   <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      max-width:640px;
-      margin:60px auto;
-      padding:0 24px;
-      background:#fff;
-      color:#000;
-      font:16px/1.6 Georgia, 'Times New Roman', Times, serif;
+    :root {
+      --bg:        #ffffff;
+      --ink:       #111111;
+      --line:      #FF6600;
+      --line-soft: #ffe5d0;
     }
-    h1{
-      font-size:28px;
-      font-weight:bold;
-      margin-bottom:8px;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { background: #ffffff; color: var(--ink); overflow-x: clip; scroll-behavior: smooth; }
+    body {
+      background: #ffffff; color: var(--ink);
+      font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+      font-size: 16px; line-height: 1.6;
+      overflow-x: clip;
     }
-    nav{
-      margin-bottom:32px;
-      font-size:15px;
+    ::selection { background: var(--line); color: #ffffff; }
+
+    /* ─── Ambient dithered side panels ─── */
+    .sides { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+    .side {
+      position: absolute; top: 0; bottom: 0; width: 50vw;
+      background-color: var(--bg);
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      image-rendering: pixelated;
+      opacity: 0.9;
     }
-    nav a{margin-right:16px}
-    a{color:#000;text-decoration:underline}
-    a:hover{color:#555}
-    p{margin-bottom:16px}
+    .side-left  { left: 0;  background-image: url('assets/side-1018.png'); }
+    .side-right { right: 0; background-image: url('assets/side-1015.png'); }
+
+    /* ─── Central frame ─── */
+    .frame {
+      max-width: 1200px; margin: 0 auto;
+      border: 1px solid var(--line);
+      min-height: 100dvh;
+      padding: 0 32px;
+      position: relative; z-index: 1;
+      background: #ffffff;
+      display: flex; flex-direction: column;
+    }
+
+    /* ─── Sticky nav ─── */
+    .nav {
+      position: sticky; top: 0; z-index: 360;
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center; gap: 16px;
+      padding: 8px 16px 8px 32px; margin: 0 -32px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-sections {
+      grid-column: 1; justify-self: start;
+      display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; letter-spacing: -0.01em;
+    }
+    .nav-sections a { color: var(--ink); text-decoration: none; transition: color 0.15s; }
+    .nav-sections a:hover { color: var(--line); }
+    .nav-logo {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px;
+      background: var(--line); color: #ffffff;
+      font-weight: 700; font-size: 13px; letter-spacing: -0.02em;
+      text-decoration: none; user-select: none;
+    }
+    .nav-links { grid-column: 3; justify-self: end; display: flex; gap: 18px; align-items: center; }
+    .nav-links > a {
+      color: var(--ink); text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; letter-spacing: -0.01em;
+      transition: color 0.15s;
+    }
+    .nav-links > a:hover { color: var(--line); }
+    .nav-cv {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      font-weight: 700; letter-spacing: -0.01em;
+      color: var(--line) !important; text-decoration: none; white-space: nowrap;
+      transition: color 0.15s;
+    }
+    .nav-cv:hover { color: #cc5200 !important; }
+    .nav-cv svg { display: block; }
+    .modes {
+      display: inline-flex; align-items: center; gap: 12px;
+      margin-left: -2px; padding-left: 16px;
+      border-left: 1px solid rgba(0, 0, 0, 0.15);
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+      line-height: 1;
+    }
+    .mode {
+      border: 0; background: transparent; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 2px 0;
+      font: inherit;
+      color: rgba(0, 0, 0, 0.25);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      transition: color 0.15s;
+    }
+    .mode::before { content: "[ ]"; }
+    .mode:hover { color: rgba(0, 0, 0, 0.55); }
+    .mode.is-active { color: var(--line); }
+    .mode.is-active::before { content: "[x]"; }
+
+    /* ─── Hero ─── */
+    .hero {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center;
+      padding: 80px 0 24px;
+      max-width: 920px; margin: 0 auto;
+    }
+    .hero-lead { max-width: 600px; margin: 0 auto; text-align: left; }
+    .hero-title {
+      font-size: 16px; font-weight: 600; line-height: 1.3;
+      letter-spacing: -0.01em; color: var(--ink); margin: 0 0 16px;
+    }
+    .hero-lead p { font-size: 16px; line-height: 1.6; color: var(--ink); margin: 0 0 16px; }
+    .hero-lead p:last-child { margin-bottom: 0; }
+    .mark {
+      background-image: linear-gradient(rgba(255, 102, 0, 0.18), rgba(255, 102, 0, 0.18));
+      background-repeat: no-repeat;
+      background-position: 0 50%;
+      background-size: 100% 1.25em;
+      padding: 0 0.18em;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+    }
+
+    /* ─── Project cards — fanned, tilted, punch-holed ─── */
+    .cards {
+      display: flex; flex-direction: column; align-items: center;
+      margin: 36px auto 72px;
+      padding: 28px 0;
+      width: 100%; max-width: 960px;
+    }
+    .cards-row { display: flex; justify-content: center; align-items: flex-end; }
+    .mini {
+      --rot: 0deg;
+      --card-w: clamp(150px, 18.5vw, 220px);
+      display: flex; flex-direction: column;
+      flex: none;
+      width: var(--card-w); height: auto;
+      aspect-ratio: 11 / 16;
+      margin-left: calc(var(--card-w) * -0.2);
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 0;
+      text-align: left;
+      font-family: inherit; color: inherit;
+      position: relative; z-index: 1;
+      transform: rotate(var(--rot));
+      transform-origin: 50% 100%;
+      transition: transform 0.6s cubic-bezier(0.32, 0.72, 0, 1),
+                  box-shadow 0.6s cubic-bezier(0.32, 0.72, 0, 1);
+      will-change: transform;
+      backface-visibility: hidden;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+      box-shadow: 0 6px 16px -8px rgba(0,0,0,0.18);
+      -webkit-mask:
+        radial-gradient(circle calc(var(--card-w) * 0.032) at calc(50% - var(--card-w) * 0.109) calc(var(--card-w) * 0.073), #0000 calc(var(--card-w) * 0.0273), #000 calc(var(--card-w) * 0.0295)),
+        radial-gradient(circle calc(var(--card-w) * 0.032) at 50% calc(var(--card-w) * 0.073),                              #0000 calc(var(--card-w) * 0.0273), #000 calc(var(--card-w) * 0.0295)),
+        radial-gradient(circle calc(var(--card-w) * 0.032) at calc(50% + var(--card-w) * 0.109) calc(var(--card-w) * 0.073), #0000 calc(var(--card-w) * 0.0273), #000 calc(var(--card-w) * 0.0295));
+      -webkit-mask-composite: source-in;
+      mask:
+        radial-gradient(circle calc(var(--card-w) * 0.032) at calc(50% - var(--card-w) * 0.109) calc(var(--card-w) * 0.073), #0000 calc(var(--card-w) * 0.0273), #000 calc(var(--card-w) * 0.0295)),
+        radial-gradient(circle calc(var(--card-w) * 0.032) at 50% calc(var(--card-w) * 0.073),                              #0000 calc(var(--card-w) * 0.0273), #000 calc(var(--card-w) * 0.0295)),
+        radial-gradient(circle calc(var(--card-w) * 0.032) at calc(50% + var(--card-w) * 0.109) calc(var(--card-w) * 0.073), #0000 calc(var(--card-w) * 0.0273), #000 calc(var(--card-w) * 0.0295));
+      mask-composite: intersect;
+    }
+    .cards-row .mini:nth-child(1) { --rot: -3deg; }
+    .cards-row .mini:nth-child(2) { --rot: -1.5deg; }
+    .cards-row .mini:nth-child(3) { --rot:  0deg; }
+    .cards-row .mini:nth-child(4) { --rot:  1.5deg; }
+    .cards-row .mini:nth-child(5) { --rot:  3deg; }
+    .mini:hover { transform: rotate(var(--rot)) translateY(-6px); z-index: 100; }
+    .cards-row .mini:hover ~ .mini { transform: rotate(var(--rot)) translateX(32px); }
+    .cards-row .mini:has(~ .mini:hover) { transform: rotate(var(--rot)) translateX(-32px); }
+    .mini-art {
+      width: 100%;
+      aspect-ratio: 220 / 138;
+      background-color: var(--bg);
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      image-rendering: pixelated;
+      position: relative; overflow: hidden; flex: none;
+    }
+    .mini-body {
+      padding: calc(var(--card-w) * 0.064) calc(var(--card-w) * 0.073) calc(var(--card-w) * 0.073);
+      flex: 1; min-height: 0;
+      display: flex; flex-direction: column; gap: calc(var(--card-w) * 0.027);
+      overflow: hidden;
+    }
+    .mini-q {
+      font-size: calc(var(--card-w) * 0.05); font-weight: 400; line-height: 1.3;
+      color: var(--line); letter-spacing: -0.01em;
+      margin: 0 0 calc(var(--card-w) * 0.009);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .mini-title {
+      font-weight: 600; font-size: calc(var(--card-w) * 0.068); line-height: 1.25;
+      color: var(--ink); margin: 0; letter-spacing: -0.01em;
+    }
+    .mini-detail {
+      font-size: calc(var(--card-w) * 0.059); color: var(--ink); line-height: 1.45; margin: 0;
+    }
+
+    /* ─── Footer ─── */
+    .footer {
+      margin-top: auto;
+      padding: 16px 0 20px;
+      border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: -0.01em;
+    }
+    .footer a { color: var(--ink); text-decoration: none; transition: color 0.15s; }
+    .footer a:hover { color: var(--line); }
+
+    /* ─── Machine view ─── */
+    .machine {
+      display: none;
+      position: fixed; inset: 0; z-index: 300;
+      background: #111111; color: #e8e8e8;
+      overflow-y: auto;
+      font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7;
+      padding: 72px 24px 48px;
+    }
+    body.machine-on .machine { display: block; }
+    body.machine-on .nav { background: #111111; border-bottom-color: var(--line); }
+    body.machine-on .nav-sections a, body.machine-on .nav-links > a { color: rgba(255,255,255,0.7); }
+    body.machine-on .mode { color: rgba(255, 255, 255, 0.4); }
+    body.machine-on .mode:hover { color: rgba(255, 255, 255, 0.7); }
+    body.machine-on .mode.is-active { color: var(--line); }
+    body.machine-on .modes { border-left-color: rgba(255,255,255,0.2); }
+    .machine pre { white-space: pre-wrap; max-width: 640px; margin: 0 auto; font-family: inherit; }
+    .machine a { color: var(--line); }
+
+    /* ─── Narrow screens ─── */
+    @media (max-width: 900px) {
+      .frame { padding: 0 20px; }
+      .nav { padding: 8px 20px; margin: 0 -20px; }
+      .nav-sections { display: none; }
+      .nav-logo { position: static; transform: none; order: -1; }
+      .nav { display: flex; justify-content: space-between; gap: 12px; }
+      .modes { gap: 8px; padding-left: 12px; margin-left: 0; }
+    }
+    @media (max-width: 720px) {
+      .modes { display: none; }
+      .hero { padding-top: 40px; }
+      .cards-row { flex-wrap: wrap; gap: 20px; align-items: stretch; }
+      .mini { --card-w: min(74vw, 260px); margin-left: 0; transform: none; }
+      .cards-row .mini:hover ~ .mini,
+      .cards-row .mini:has(~ .mini:hover) { transform: none; }
+    }
   </style>
 </head>
 <body>
-  <h1><a href="/" style="text-decoration:none">Prangon Barua</a></h1>
-  <nav>
-    <a href="/">Home</a>
-    <a href="cv.pdf">CV</a>
-  </nav>
+  <div class="sides" aria-hidden="true">
+    <div class="side side-left"></div>
+    <div class="side side-right"></div>
+  </div>
+
+  <div class="frame">
+    <nav class="nav">
+      <div class="nav-sections" aria-label="Sections">
+        <a href="#projects">Projects</a>
+        <a href="mailto:baruaprangon5@gmail.com">Contact</a>
+      </div>
+      <a href="/" class="nav-logo" aria-label="Home">PB</a>
+      <div class="nav-links">
+        <a href="https://github.com/prangonbarua">GitHub</a>
+        <a href="cv.pdf" class="nav-cv" aria-label="Download CV">
+          [
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 2v8M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 10v3a1 1 0 001 1h10a1 1 0 001-1v-3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          CV
+          ]
+        </a>
+        <div class="modes" role="group" aria-label="View mode">
+          <button type="button" class="mode is-active" data-mode="human">Human</button>
+          <button type="button" class="mode" data-mode="machine">Machine</button>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-lead">
+        <h1 class="hero-title">Hi &mdash; I&rsquo;m Prangon.</h1>
+        <p>I&rsquo;m a high school student in Massachusetts who builds things across <span class="mark">hardware, radio, and software</span>.</p>
+        <p>I&rsquo;m a licensed ham radio operator. I&rsquo;ve put GPS trackers on RC planes, built Yagi antennas by hand, and written bots that read the stock market before I wake up.</p>
+        <p>I&rsquo;ve worked alongside engineers at <span class="mark">BAE Systems</span>, studied radar signal processing at <span class="mark">MIT Beaver Works</span>, and prototyped underwater robots with MITRE and GreenSight.</p>
+        <p>Here are a few things I&rsquo;ve built...</p>
+      </div>
+    </section>
+
+    <div class="cards" id="projects" role="list" aria-label="Projects">
+      <div class="cards-row">
+        <div class="mini" role="listitem">
+          <div class="mini-art" style="background-image: url('assets/card-1022.png')"></div>
+          <div class="mini-body">
+            <p class="mini-q">Chart history, no paywall</p>
+            <h3 class="mini-title">Billboard Chart Archive</h3>
+            <p class="mini-detail">Every Hot 100 and Billboard 200 chart since 1958, scraped weekly and searchable by artist.</p>
+          </div>
+        </div>
+        <div class="mini" role="listitem">
+          <div class="mini-art" style="background-image: url('assets/card-1016.png')"></div>
+          <div class="mini-body">
+            <p class="mini-q">140k+ views on YouTube</p>
+            <h3 class="mini-title">Chart Race Videos</h3>
+            <p class="mini-detail">Animated Billboard bar-chart races rendered from 60 years of chart data.</p>
+          </div>
+        </div>
+        <div class="mini" role="listitem">
+          <div class="mini-art" style="background-image: url('assets/card-1036.png')"></div>
+          <div class="mini-body">
+            <p class="mini-q">ESP32 + LoRa + GPS</p>
+            <h3 class="mini-title">RC Plane Tracker</h3>
+            <p class="mini-detail">Live flight telemetry beamed from a plane over LoRa to a ground-station dashboard.</p>
+          </div>
+        </div>
+        <div class="mini" role="listitem">
+          <div class="mini-art" style="background-image: url('assets/card-1019.png')"></div>
+          <div class="mini-body">
+            <p class="mini-q">14 languages</p>
+            <h3 class="mini-title">Relate</h3>
+            <p class="mini-detail">A mobile app helping immigrant parents of kids with developmental differences find answers in their own language.</p>
+          </div>
+        </div>
+        <div class="mini" role="listitem">
+          <div class="mini-art" style="background-image: url('assets/card-1037.png')"></div>
+          <div class="mini-body">
+            <p class="mini-q">Markets, every morning</p>
+            <h3 class="mini-title">Investment Trend Agent</h3>
+            <p class="mini-detail">A bot that compiles S&amp;P 500, sector, and IPO reports and posts them to Discord daily.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <span>Prangon Barua</span>
+      <a href="mailto:baruaprangon5@gmail.com">baruaprangon5@gmail.com</a>
+    </footer>
+  </div>
+
+  <div class="machine" aria-hidden="true">
+    <pre>
+# prangon barua
+
+high school student, massachusetts.
+hardware / radio / software.
+
+## facts
+- fcc part 97 technician license (ham radio)
+- focus @ bae systems
+- mit beaver works — radar dsp, remote sensing
+- bluetech academy — auv prototyping w/ mitre + greensight
+- massrobotics drone academy
+
+## projects
+- billboard-chart-archive .... hot 100 + billboard 200 since 1958
+- chart race videos .......... 140k+ views on youtube
+- rc-plane-tracker ........... esp32 + lora + gps telemetry
+- relate ..................... 14-language app for immigrant parents
+- investment-trend-agent ..... daily market reports to discord
+
+## contact
+email:  baruaprangon5@gmail.com
+github: <a href="https://github.com/prangonbarua">github.com/prangonbarua</a>
+cv:     <a href="cv.pdf">cv.pdf</a>
+    </pre>
+  </div>
+
+  <script>
+    const modeBtns = document.querySelectorAll('.mode');
+    modeBtns.forEach(btn => btn.addEventListener('click', () => {
+      modeBtns.forEach(b => b.classList.toggle('is-active', b === btn));
+      document.body.classList.toggle('machine-on', btn.dataset.mode === 'machine');
+    }));
+  </script>
 </body>
 </html>
